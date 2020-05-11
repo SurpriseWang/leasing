@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mdjnu.leasing.mapper.HouseMapper" >
+  <resultMap id="BaseResultMap" type="com.mdjnu.leasing.pojo.House" >
+    <id column="house_id" property="houseId" jdbcType="INTEGER" />
+    <result column="user_Id" property="userId" jdbcType="INTEGER" />
+    <result column="house_address" property="houseAddress" jdbcType="VARCHAR" />
+    <result column="house_card_number" property="houseCardNumber" jdbcType="VARCHAR" />
+    <result column="house_area" property="houseArea" jdbcType="REAL" />
+    <result column="house_sell" property="houseSell" jdbcType="INTEGER" />
+    <result column="house_sell_money" property="houseSellMoney" jdbcType="REAL" />
+    <result column="house_lease" property="houseLease" jdbcType="INTEGER" />
+    <result column="house_lease_money" property="houseLeaseMoney" jdbcType="REAL" />
+    <result column="house_photo" property="housePhoto" jdbcType="VARCHAR" />
+    <result column="house_describe" property="houseDescribe" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    house_id, user_Id, house_address, house_card_number, house_area, house_sell, house_sell_money, 
+    house_lease, house_lease_money, house_photo, house_describe
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mdjnu.leasing.pojo.HouseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from house
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from house
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from house
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mdjnu.leasing.pojo.HouseExample" >
+    delete from house
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mdjnu.leasing.pojo.House" >
+    insert into house (house_id, user_Id, house_address, 
+      house_card_number, house_area, house_sell, 
+      house_sell_money, house_lease, house_lease_money, 
+      house_photo, house_describe)
+    values (#{houseId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{houseAddress,jdbcType=VARCHAR}, 
+      #{houseCardNumber,jdbcType=VARCHAR}, #{houseArea,jdbcType=REAL}, #{houseSell,jdbcType=INTEGER}, 
+      #{houseSellMoney,jdbcType=REAL}, #{houseLease,jdbcType=INTEGER}, #{houseLeaseMoney,jdbcType=REAL}, 
+      #{housePhoto,jdbcType=VARCHAR}, #{houseDescribe,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mdjnu.leasing.pojo.House" >
+    insert into house
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="houseId != null" >
+        house_id,
+      </if>
+      <if test="userId != null" >
+        user_Id,
+      </if>
+      <if test="houseAddress != null" >
+        house_address,
+      </if>
+      <if test="houseCardNumber != null" >
+        house_card_number,
+      </if>
+      <if test="houseArea != null" >
+        house_area,
+      </if>
+      <if test="houseSell != null" >
+        house_sell,
+      </if>
+      <if test="houseSellMoney != null" >
+        house_sell_money,
+      </if>
+      <if test="houseLease != null" >
+        house_lease,
+      </if>
+      <if test="houseLeaseMoney != null" >
+        house_lease_money,
+      </if>
+      <if test="housePhoto != null" >
+        house_photo,
+      </if>
+      <if test="houseDescribe != null" >
+        house_describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="houseId != null" >
+        #{houseId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="houseAddress != null" >
+        #{houseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCardNumber != null" >
+        #{houseCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="houseArea != null" >
+        #{houseArea,jdbcType=REAL},
+      </if>
+      <if test="houseSell != null" >
+        #{houseSell,jdbcType=INTEGER},
+      </if>
+      <if test="houseSellMoney != null" >
+        #{houseSellMoney,jdbcType=REAL},
+      </if>
+      <if test="houseLease != null" >
+        #{houseLease,jdbcType=INTEGER},
+      </if>
+      <if test="houseLeaseMoney != null" >
+        #{houseLeaseMoney,jdbcType=REAL},
+      </if>
+      <if test="housePhoto != null" >
+        #{housePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="houseDescribe != null" >
+        #{houseDescribe,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mdjnu.leasing.pojo.HouseExample" resultType="java.lang.Integer" >
+    select count(*) from house
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update house
+    <set >
+      <if test="record.houseId != null" >
+        house_id = #{record.houseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_Id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseAddress != null" >
+        house_address = #{record.houseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseCardNumber != null" >
+        house_card_number = #{record.houseCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseArea != null" >
+        house_area = #{record.houseArea,jdbcType=REAL},
+      </if>
+      <if test="record.houseSell != null" >
+        house_sell = #{record.houseSell,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseSellMoney != null" >
+        house_sell_money = #{record.houseSellMoney,jdbcType=REAL},
+      </if>
+      <if test="record.houseLease != null" >
+        house_lease = #{record.houseLease,jdbcType=INTEGER},
+      </if>
+      <if test="record.houseLeaseMoney != null" >
+        house_lease_money = #{record.houseLeaseMoney,jdbcType=REAL},
+      </if>
+      <if test="record.housePhoto != null" >
+        house_photo = #{record.housePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseDescribe != null" >
+        house_describe = #{record.houseDescribe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update house
+    set house_id = #{record.houseId,jdbcType=INTEGER},
+      user_Id = #{record.userId,jdbcType=INTEGER},
+      house_address = #{record.houseAddress,jdbcType=VARCHAR},
+      house_card_number = #{record.houseCardNumber,jdbcType=VARCHAR},
+      house_area = #{record.houseArea,jdbcType=REAL},
+      house_sell = #{record.houseSell,jdbcType=INTEGER},
+      house_sell_money = #{record.houseSellMoney,jdbcType=REAL},
+      house_lease = #{record.houseLease,jdbcType=INTEGER},
+      house_lease_money = #{record.houseLeaseMoney,jdbcType=REAL},
+      house_photo = #{record.housePhoto,jdbcType=VARCHAR},
+      house_describe = #{record.houseDescribe,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mdjnu.leasing.pojo.House" >
+    update house
+    <set >
+      <if test="userId != null" >
+        user_Id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="houseAddress != null" >
+        house_address = #{houseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCardNumber != null" >
+        house_card_number = #{houseCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="houseArea != null" >
+        house_area = #{houseArea,jdbcType=REAL},
+      </if>
+      <if test="houseSell != null" >
+        house_sell = #{houseSell,jdbcType=INTEGER},
+      </if>
+      <if test="houseSellMoney != null" >
+        house_sell_money = #{houseSellMoney,jdbcType=REAL},
+      </if>
+      <if test="houseLease != null" >
+        house_lease = #{houseLease,jdbcType=INTEGER},
+      </if>
+      <if test="houseLeaseMoney != null" >
+        house_lease_money = #{houseLeaseMoney,jdbcType=REAL},
+      </if>
+      <if test="housePhoto != null" >
+        house_photo = #{housePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="houseDescribe != null" >
+        house_describe = #{houseDescribe,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mdjnu.leasing.pojo.House" >
+    update house
+    set user_Id = #{userId,jdbcType=INTEGER},
+      house_address = #{houseAddress,jdbcType=VARCHAR},
+      house_card_number = #{houseCardNumber,jdbcType=VARCHAR},
+      house_area = #{houseArea,jdbcType=REAL},
+      house_sell = #{houseSell,jdbcType=INTEGER},
+      house_sell_money = #{houseSellMoney,jdbcType=REAL},
+      house_lease = #{houseLease,jdbcType=INTEGER},
+      house_lease_money = #{houseLeaseMoney,jdbcType=REAL},
+      house_photo = #{housePhoto,jdbcType=VARCHAR},
+      house_describe = #{houseDescribe,jdbcType=VARCHAR}
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </update>
+</mapper>

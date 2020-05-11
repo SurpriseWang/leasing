@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户中心</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../js/userHouse.js"></script>
+</head>
+<body>
+<ul class="nav nav-tabs"
+    style="border: 0;height: 40px;position: fixed;
+    top: 0px; left: 5%; z-index: 9999;
+    width: 90%;background-color: black;border-radius: 6px;
+    opacity:0.9;">
+    <div style="padding: 0" class="col-12 form-inline">
+        <div class="col-10 button_spaces">
+            <a style="color: lightgray" href="./index.html">主页</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a class="breadcrumb-item" style="color: lightgray" href="./userExtend.html">个人账户信息</a>
+            <a class="breadcrumb-item" style="color: lightgray" href="./userHouse.html">个人房屋管理</a>
+            <a class="breadcrumb-item" style="color: lightgray" href="./userGoods.html">个人物品管理</a>
+        </div>
+        <div class="col-1 button_spaces">
+            <a id="a_login" style="color: red" data-toggle="modal" data-target="#login">
+                登录
+            </a>
+        </div>
+        <div class="col-1">
+            <li class="dropdown button_spaces">
+                <a style="color: lightgray" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    个人中心 <span class="caret"></span>
+                </a>
+                <ul style="background-color: black;opacity:0.9;" class="dropdown-menu button_href">
+                    <li><a style="color: lightgray" href="Http://localhost:8080/html/userExtend.html">账户管理</a></li>
+                    <li><a style="color: lightgray" href="Http://localhost:8080/logout">退出</a></li>
+                </ul>
+            </li>
+        </div>
+    </div>
+</ul>
+<!-- 模态框 -->
+<div class="modal fade" id="login" style="border-radius: 6px">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">牡丹江新闻网-登录</h4><br>
+                <button id="close_modal1" type="button" class="close close_modal1" data-dismiss="modal">&times;</button>
+            </div>
+            <!--            Http://localhost:8080/user/login-->
+            <form action="Http://localhost:8080/login" method="get">
+                <p style="display:inline;">&nbsp;&nbsp;&nbsp;没有账号？</p>
+                <a id="insert_a" style="color: blue" data-toggle="modal"
+                   data-target="#insert">立即注册</a>
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <label for="user_name">账号:</label>
+                    <input name="userName" class="form-control" id="user_name" type="text"/></br>
+                    <label for="user_password">密码:</label>
+                    <input name="userPassword" class="form-control" id="user_password" type="password"/></br>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <input style="text-align: center" class="btn btn-outline-danger" type="submit" value="登录">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="insert" style="border-radius: 6px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">牡丹江新闻网-注册</h4><br>
+                <button type="button" class="close close_modal1" data-dismiss="modal">&times;</button>
+            </div>
+            <!--            Http://localhost:8080/user/login-->
+            <form action="Http://localhost:8080/createUser" method="get">
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <label for="insert_user_name">账号:</label>
+                    <input name="userName" class="form-control" id="insert_user_name" type="text"/></br>
+                    <label for="insert_user_phone">手机号:</label>
+                    <input name="userPhone" class="form-control" id="insert_user_phone" type="text"
+                           maxlength="11"/></br>
+                    <label for="insert_user_password">密码:</label>
+                    <input name="userPassword" class="form-control" id="insert_user_password" type="password"/></br>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <input style="text-align: center" class="btn btn-outline-success" type="submit" value="注册">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-12 " style="margin-top: 50px;margin-left: 100px;width: 86%">
+    <h4>个人房屋管理：</h4>
+    <div class="form-inline">
+        <div class="col-5" style="margin-top: 20px;margin-left: 50px;padding: 0;height: 1px;">
+            <form action="http://localhost:8080/deleteUserHouse">
+                <table class="table table-hover" id="houseTable">
+                </table>
+                <center><input class=" btn btn-info" type="submit" value="删除所选房屋"></center>
+            </form>
+        </div>
+        <div class="col-5"
+             style="margin-left: 110px;padding: 0;height: 1px;margin-top: 20px;">
+            <table class="table table-hover">
+                <tbody id="userAccountNew">
+                <form action="http://localhost:8080/insertUserHouse">
+                    <tr>
+                        <td>房屋地址：</td>
+                        <td>
+                            <select class="form-control" name="houseAddress">
+                                <option value="东安区" selected>东安区</option>
+                                <option value="阳明区">阳明区</option>
+                                <option value="爱民区">爱民区</option>
+                                <option value="西安区">西安区</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>房产编号：</td>
+                        <td><input class="form-control" id="houseCardNumberNew" name="houseCardNumber"/></td>
+                    </tr>
+                    <tr>
+                        <td>房产大小（平）：</td>
+                        <td><input class="form-control" id="houseAreaNew" name="houseArea"/></td>
+                    </tr>
+                    <tr>
+                        <td>是否出售：</td>
+                        <td><select class="form-control" name="houseSell">
+                            <option value="1" selected>出售</option>
+                            <option value="0">不出售</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>出售价格：不出售请填写0</td>
+                        <td><input class="form-control" id="houseSellMoneyNew" name="houseSellMoney"/></td>
+                    </tr>
+                    <tr>
+                        <td>是否出租：</td>
+                        <td><select class="form-control" name="houseLease">
+                            <option value="1" selected>出租</option>
+                            <option value="0">不出租</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>出租价格：不出租请填写0</td>
+                        <td><input class="form-control" id="houseLeaseMoneyNew" name="houseLeaseMoney"/></td>
+                    </tr>
+                    <tr>
+                        <td>房屋图片：</td>
+                        <td><select class="form-control" name="housePhoto">
+                            <option value="houses1.jpg" selected>图片1</option>
+                            <option value="houses2.jpg">图片2</option>
+                            <option value="houses3.jpg">图片3</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>房屋描述：</td>
+                        <td><input class="form-control" id="houseDescribeNew" name="houseDescribe"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan='3'>
+                            <center><input id="createHouse" class="btn btn-primary" type="submit" value="提交添加"></center>
+                        </td>
+                    </tr>
+                </form>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

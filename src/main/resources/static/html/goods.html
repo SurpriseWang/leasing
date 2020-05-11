@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二手物品</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../js/goods.js"></script>
+    <style>
+        .button_spaces {
+            border: 0;
+            padding-top: 6px;
+        }
+
+        .button_href {
+            padding-left: 20px;
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+<ul class="nav nav-tabs"
+    style="border: 0;height: 40px;position: fixed;
+    top: 0px; left: 5%; z-index: 9999;
+    width: 90%;background-color: black;border-radius: 6px;
+    opacity:0.9;">
+    <div class="col-10 button_spaces">
+        <a href="./index.html">主页</a>
+    </div>
+    <div class="col-1 button_spaces">
+        <a id="a_login" style="color: red" data-toggle="modal" data-target="#login">
+            登录
+        </a>
+    </div>
+    <div class="col-1">
+        <li class="dropdown button_spaces">
+            <a style="color: lightgray" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                个人中心 <span class="caret"></span>
+            </a>
+            <ul style="background-color: black;opacity:0.9;" class="dropdown-menu button_href">
+                <li><a onclick="userCore()" style="color: lightgray">账户管理</a></li>
+                <li><a style="color: lightgray" href="Http://localhost:8080/logout">退出</a></li>
+            </ul>
+        </li>
+    </div>
+</ul>
+<!-- 模态框 -->
+<div class="modal fade" id="login" style="border-radius: 6px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">牡丹江新闻网-登录</h4><br>
+                <button type="button" class="close close_modal1" data-dismiss="modal">&times;</button>
+            </div>
+            <!--            Http://localhost:8080/user/login-->
+            <form action="Http://localhost:8080/login" method="get">
+                <p style="display:inline;">&nbsp;&nbsp;&nbsp;没有账号？</p>
+                <a id="insert_a" style="color: blue" data-toggle="modal"
+                   data-target="#insert">立即注册</a>
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <label for="user_name">账号:</label>
+                    <input name="userName" class="form-control" id="user_name" type="text"/></br>
+                    <label for="user_password">密码:</label>
+                    <input name="userPassword" class="form-control" id="user_password" type="password"/></br>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <input style="text-align: center" class="btn btn-outline-danger" type="submit" value="登录">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="insert" style="border-radius: 6px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">牡丹江新闻网-注册</h4><br>
+                <button type="button" class="close close_modal1" data-dismiss="modal">&times;</button>
+            </div>
+            <!--            Http://localhost:8080/user/login-->
+            <form action="Http://localhost:8080/createUser" method="get">
+                <!-- 模态框主体 -->
+                <div class="modal-body">
+                    <label for="insert_user_name">账号:</label>
+                    <input name="userName" class="form-control" id="insert_user_name" type="text"/></br>
+                    <label for="insert_user_phone">手机号:</label>
+                    <input name="userPhone" class="form-control" id="insert_user_phone" type="text"
+                           maxlength="11"/></br>
+                    <label for="insert_user_password">密码:</label>
+                    <input name="userPassword" class="form-control" id="insert_user_password" type="password"/></br>
+                </div>
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <input style="text-align: center" class="btn btn-outline-success" type="submit" value="注册">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<img style="width: 100%;height: 650px;" src="../file/goodsBackground.jpg">
+<div style="position:relative; top:-320px;left: 290px; width: 80%">
+    <form action="" class="form-inline">
+        <input id="search_value" class="form-control" placeholder="请输入：物品名称，物品类别等...."
+               style="height:50px;width:700px;display:inline;" type="text"/>
+        <input id="search_button" class="btn btn-primary" type="button" value="检索"
+               style="height:50px;width:200px;display:inline;"/>
+    </form>
+</div>
+<div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">物品预览</a>
+        </li>
+    </ul>
+    <table class="table table-light table-hover" style="margin-top: 10px;text-align: center">
+        <thead>
+        <tr>
+            <th>物品图片</th>
+            <th>物品简介</th>
+            <th>物品是否可售</th>
+            <th>物品售价</th>
+        </tr>
+        </thead>
+        <tbody id="goodsTable">
+        </tbody>
+    </table>
+    <center>
+        <a class="btn-primary btn col-2" style="text-align: center;" href="./searchGoods.html">...获取更多</a>
+    </center>
+</div>
+</body>
+</html>

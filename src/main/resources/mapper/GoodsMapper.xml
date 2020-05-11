@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mdjnu.leasing.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.mdjnu.leasing.pojo.Goods" >
+    <id column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="goods_describe" property="goodsDescribe" jdbcType="VARCHAR" />
+    <result column="goods_sell" property="goodsSell" jdbcType="VARCHAR" />
+    <result column="goods_sell_money" property="goodsSellMoney" jdbcType="REAL" />
+    <result column="goods_photo" property="goodsPhoto" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    goods_id, user_id, goods_describe, goods_sell, goods_sell_money, goods_photo
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mdjnu.leasing.pojo.GoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mdjnu.leasing.pojo.GoodsExample" >
+    delete from goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mdjnu.leasing.pojo.Goods" >
+    insert into goods (goods_id, user_id, goods_describe, 
+      goods_sell, goods_sell_money, goods_photo
+      )
+    values (#{goodsId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{goodsDescribe,jdbcType=VARCHAR}, 
+      #{goodsSell,jdbcType=VARCHAR}, #{goodsSellMoney,jdbcType=REAL}, #{goodsPhoto,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mdjnu.leasing.pojo.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="goodsDescribe != null" >
+        goods_describe,
+      </if>
+      <if test="goodsSell != null" >
+        goods_sell,
+      </if>
+      <if test="goodsSellMoney != null" >
+        goods_sell_money,
+      </if>
+      <if test="goodsPhoto != null" >
+        goods_photo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDescribe != null" >
+        #{goodsDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSell != null" >
+        #{goodsSell,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSellMoney != null" >
+        #{goodsSellMoney,jdbcType=REAL},
+      </if>
+      <if test="goodsPhoto != null" >
+        #{goodsPhoto,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mdjnu.leasing.pojo.GoodsExample" resultType="java.lang.Integer" >
+    select count(*) from goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goods
+    <set >
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsDescribe != null" >
+        goods_describe = #{record.goodsDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsSell != null" >
+        goods_sell = #{record.goodsSell,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsSellMoney != null" >
+        goods_sell_money = #{record.goodsSellMoney,jdbcType=REAL},
+      </if>
+      <if test="record.goodsPhoto != null" >
+        goods_photo = #{record.goodsPhoto,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goods
+    set goods_id = #{record.goodsId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      goods_describe = #{record.goodsDescribe,jdbcType=VARCHAR},
+      goods_sell = #{record.goodsSell,jdbcType=VARCHAR},
+      goods_sell_money = #{record.goodsSellMoney,jdbcType=REAL},
+      goods_photo = #{record.goodsPhoto,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mdjnu.leasing.pojo.Goods" >
+    update goods
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDescribe != null" >
+        goods_describe = #{goodsDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSell != null" >
+        goods_sell = #{goodsSell,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSellMoney != null" >
+        goods_sell_money = #{goodsSellMoney,jdbcType=REAL},
+      </if>
+      <if test="goodsPhoto != null" >
+        goods_photo = #{goodsPhoto,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mdjnu.leasing.pojo.Goods" >
+    update goods
+    set user_id = #{userId,jdbcType=INTEGER},
+      goods_describe = #{goodsDescribe,jdbcType=VARCHAR},
+      goods_sell = #{goodsSell,jdbcType=VARCHAR},
+      goods_sell_money = #{goodsSellMoney,jdbcType=REAL},
+      goods_photo = #{goodsPhoto,jdbcType=VARCHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+</mapper>
